@@ -3,9 +3,14 @@ document.addEventListener("DOMContentLoaded", () => {
     // initializating global constants
     const rows = document.querySelectorAll(".inputRows");
     const helpBtn = document.getElementById("helpBtn");
+    const aboutBtn = document.getElementById("aboutBtn");
     const helpPopup = document.getElementById("helpPopup");
+    const aboutPopup = document.getElementById("aboutPopup");
+
     const overlay = document.getElementById("overlay");
     const closeHelpBtn = document.getElementById("closeHelpBtn");
+    const closeAboutBtn = document.getElementById("closeAboutBtn");
+
 
     let currentRow = 0;
     let currentField = 0;
@@ -107,7 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log(guessedWord);
 
         for (let i = 0; i < 5; i++) {
-            if (guessedWord[i].indexOf(word) !== -1) {  // Checks if guessedWord[i] exists in word
+            if ((word.indexOf(guessedWord[i]) !== -1) && !isMarked[i]) {  // Checks if guessedWord[i] exists in word
                 //change keycap and input field color if the letter is in word but not in the correct position
                 fields[i].style.backgroundColor = "#ceb235";
                 getKeycap(fields[i].textContent).style.backgroundColor = "#ceb235";
@@ -143,8 +148,17 @@ document.addEventListener("DOMContentLoaded", () => {
         handlePopup(helpBtn);
     };
 
+    aboutBtn.onclick = function () {
+        handlePopup(aboutBtn);
+    };
+
+
     closeHelpBtn.onclick = function () {
         handlePopup(closeHelpBtn);
+    };
+
+    closeAboutBtn.onclick = function () {
+        handlePopup(closeAboutBtn);
     };
 
 
@@ -166,6 +180,27 @@ document.addEventListener("DOMContentLoaded", () => {
             helpPopup.style.display = "none";
             overlay.style.display = "none"; // hide the overlay
             helpPopup.classList.remove("animate");
+
+        }
+
+        else if (clickedBtn === aboutBtn) {
+            console.log("handlePopup called with:", clickedBtn);
+
+            aboutPopup.style.display = "block";
+            aboutPopup.classList.add("animate");
+            overlay.style.display = "block"; //show the overlay
+
+
+            // close the popup if anything other than the the about popup is clicked
+            overlay.addEventListener("click", function (event) {
+                handlePopup(closeAboutBtn);
+            });
+        }
+
+        else if (clickedBtn === closeAboutBtn) {
+            aboutPopup.style.display = "none";
+            overlay.style.display = "none"; // hide the overlay
+            aboutPopup.classList.remove("animate");
 
         }
     }
