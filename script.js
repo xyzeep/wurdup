@@ -4,10 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const rows = document.querySelectorAll(".inputRows");
     const helpBtn = document.getElementById("helpBtn");
     const helpPopup = document.getElementById("helpPopup");
-    const rootDiv = document.getElementById("root");
-    const keyboardContainer = document.getElementById("keyboardContainer");
     const overlay = document.getElementById("overlay");
-
     const closeHelpBtn = document.getElementById("closeHelpBtn");
 
     let currentRow = 0;
@@ -52,12 +49,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 // add animation class to animate the current field
                 fields[currentField].classList.add("animate");
 
-                // remove animation class after 200ms
-                setTimeout(() => {
-                    if (currentField < fields.length) {  // for some reason and to avoid timing issues check this condition again(a TypeError will occur otherwise)
-                        fields[currentField - 1].classList.remove("animate");
-                    }
-                }, 300);
 
                 // add a white border around the input box for the sake of aesthetics
                 fields[currentField].style.border = "solid 2px white";
@@ -70,6 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
         else if (key === "Backspace") {
             // if backspace is pressed, delete the previous field
             if (currentField > 0) {
+                fields[currentField - 1].classList.remove("animate"); // remove animation class when backspace is pressed
                 // reset white border around the input box after deleting for the sake of aesthetics(again)
                 fields[currentField - 1].style.border = "solid rgb(104, 104, 104) 2px";
                 currentField--;
@@ -78,43 +70,74 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         else if (key === "Enter") {
-            // if row is complete, make fields unmodifiable
             if (currentField === fields.length) {
-                fields.forEach(field => field.classList.add("locked"));
-
-                // check every letter of a row for correct letter and position, correct letter wrong position, and wrong letter
-                for (let i = 0; i < 5; i++) {
-                    getKeycap(fields[i].textContent).style.color = "#fff";
-
-                    if (fields[i].textContent === word[i]) {
-                        //change keycap and input field color if the position is correct
-                        fields[i].style.backgroundColor = "#50C878";
-                        getKeycap(fields[i].textContent).style.backgroundColor = "#50C878";
-                    }
-                    else if (word.includes(fields[i].textContent)) {
-                        //change keycap and input field color if the position is incorrect
-                        fields[i].style.backgroundColor = "#ceb235";
-                        getKeycap(fields[i].textContent).style.backgroundColor = "#ceb235";
-
-                    }
-                    else {
-                        //change keycap and input field color if the letter is not in the word
-                        fields[i].style.backgroundColor = "#383838";
-                        getKeycap(fields[i].textContent).style.backgroundColor = "#383838";
-                    }
-                }
-
+                markGuess(fields);
                 // increment the currentRow and reset currentField to 0
                 currentRow++;
                 currentField = 0;
-            }
 
+            }
             else {
                 console.log("Not enough words!!")
             }
         }
     }
 
+    function markGuess(fields) {
+        // making guessed rows letters white colored
+        let guessedWord = [];
+        let isMarked = new Array(5).fill(false); // an array to keep track of which fields are marked and not marked
+        for (let i = 0; i < 5; i++) {
+
+            getKeycap(fields[i].textContent).style.color = "#fff";
+            guessedWord.push(fields[i].textContent);
+        }
+
+        for (let i = 0; i < 5; i++) {
+
+            if (guessedWord[i] === word[i]) {
+                //change keycap and input field color if the position is correct
+                fields[i].style.backgroundColor = "#50C878";
+                getKeycap(fields[i].textContent).style.backgroundColor = "#50C878";
+                isMarked[i] = true;
+                guessedWord[i] = "#";
+            }
+        }
+
+        console.log(guessedWord);
+
+        for (let i = 0; i < 5; i++) {
+            if (guessedWord[i].indexOf(word) !== -1) {  // Checks if guessedWord[i] exists in word
+                //change keycap and input field color if the letter is in word but not in the correct position
+                fields[i].style.backgroundColor = "#ceb235";
+                getKeycap(fields[i].textContent).style.backgroundColor = "#ceb235";
+                isMarked[i] = true;
+                guessedWord[i] = "#";
+            }
+        }
+
+        for (let i = 0; i < 5; i++) {
+            if (guessedWord[i].indexOf(word) !== -1) {  // Checks if guessedWord[i] exists in word
+                //change keycap and input field color if the letter is in word but not in the correct position
+                console.log(guessedWord[i]);
+                console.log("True!");
+                fields[i].style.backgroundColor = "#ceb235";
+                getKeycap(fields[i].textContent).style.backgroundColor = "#ceb235";
+                isMarked[i] = true;
+                guessedWord[i] = "#";
+            }
+        }
+
+        for (let i = 0; i < 5; i++) {
+            if (!isMarked[i]) {
+                fields[i].style.backgroundColor = "#383838";
+                getKeycap(fields[i].textContent).style.backgroundColor = "#383838";
+                isMarked[i] = true;
+                guessedWord[i] = "#";
+            }
+        }
+
+    }
 
     helpBtn.onclick = function () {
         handlePopup(helpBtn);
