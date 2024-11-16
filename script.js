@@ -80,7 +80,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         else if (key === "Enter") {
-            console.log(currentRow);
             if (currentField === fields.length) {
                 if (markGuess(fields) === 0) {
                     // increment the currentRow and reset currentField to 0
@@ -324,8 +323,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // pick a new random word
         word = (allWordsList[Math.floor(Math.random() * allWordsList.length)]).toUpperCase();
-        console.log("New word:", word);
-
         // reset popups and overlays
         helpPopup.style.display = "none";
         aboutPopup.style.display = "none";
