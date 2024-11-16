@@ -21,7 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentRow = 0;
     let currentField = 0;
     var word = (allWordsList[Math.floor(Math.random() * allWordsList.length)]).toUpperCase();
-    console.log(word);
     const keyCaps = document.querySelectorAll(".keyCaps");
 
     // creating an on-click event listener for every keycap div
