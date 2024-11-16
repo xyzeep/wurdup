@@ -164,7 +164,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     shareBtn.onclick = function () {
-        navigator.clipboard.writeText("The game link has been copied.")
+        navigator.clipboard.writeText("https://wurdup.netlify.app/")
         const copyTooltip = document.querySelector("#winMessageBottom .tooltipText");
         copyTooltip.textContent = "Copied!";
         setTimeout(() => {
@@ -173,7 +173,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     shareBtnLost.onclick = function () {
-        navigator.clipboard.writeText("The game link has been copied.")
+        navigator.clipboard.writeText("https://wurdup.netlify.app/")
         const copyTooltip = document.querySelector("#loseMessageBottom .tooltipText");
         copyTooltip.textContent = "Copied!";
         setTimeout(() => {
