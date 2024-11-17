@@ -15,6 +15,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const shareBtn = document.getElementById("shareGame");
     const shareBtnLost = document.getElementById("shareGameLost");
 
+    const winAudio = new Audio("sounds/WonSound.mp3");
+    const loseAudio = new Audio("sounds/lostSound.mp3");
 
     let isListeningKeys = true; // flag to control key listening
 
@@ -257,7 +259,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function showWinMessage(word) {
         isListeningKeys = false;
-        const winAudio = new Audio("sounds/WonSound.mp3");
         winAudio.volume = 0.6;
         winAudio.play();
         const winMessage = document.getElementById("winMessage");
@@ -276,7 +277,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function showLoseMessage(word) {
         isListeningKeys = false;
-        const loseAudio = new Audio("sounds/lostSound.mp3");
         loseAudio.volume = 0.6;
         loseAudio.play();
         const loseMessage = document.getElementById("loseMessage");
