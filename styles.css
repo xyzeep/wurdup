@@ -1,29 +1,28 @@
 body {
     background-color: #1E1E1E;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    margin: 0 auto;
+    margin: 0;
     color: #D4C9B9;
-    /* make the text in the body unselectable */
     user-select: none;
+    height: 100dvh;
+    overflow: hidden;
 }
 
 #root {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    background-color: #1E1E1E;
     align-items: center;
-    margin: 0 auto;
+    background-color: #1E1E1E;
+    height: 100dvh;
 }
 
 #gameBoard {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background-color: #1E1E1E;
     align-items: center;
-    margin: 0 auto;
-    width: 380px;
+    flex: 1;    /* so that it takes up all space between titleBar and keyboard */
+    width: 100%;
 }
 
 .inputRows {
@@ -49,12 +48,16 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 15px 0 0 0;
+    width: 100%;
+    padding-bottom: 12px;
 }
 
 .keyboardRows {
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 4px;
 }
 
 #titleBarIcons {
@@ -67,11 +70,12 @@ body {
 
 .keyCaps {
     background-color: #1E1E1E;
-    margin: 3px;
-    width: 60px;
+    margin: 2px;
+    flex: 1;    /* so that the keys take available row width equally */
+    max-width: 60px;
     text-align: center;
     line-height: 58px;
-    font-size: 25px;
+    font-size: clamp(12px, 3.5vw, 25px);
     font-weight: 600;
     border-radius: 41% 7% 52% 8% / 7% 48% 9% 56%;
     color: #D4C9B9;
@@ -82,8 +86,11 @@ body {
     cursor: pointer;
 }
 
-#Enter {
-    width: 100px;
+Enter,
+#Backspace {
+    flex: 1.8;  /* makes it slightly wider than other keys */
+    max-width: 100px;
+    font-size: clamp(10px, 2.8vw, 20px);
 }
 
 #titleBar {
